@@ -20,7 +20,7 @@ const Home = () => {
   const [count, setCount] = useState([]);
 
   useEffect(() => {
-    fetch('https://pixabay.com/api/?key=31152943-281e68b71e6bc477d117d000e&q=football&image_type=photo')
+    fetch('https://pixabay.com/api/?key=&q=football&image_type=photo')
     .then(res => res.json())
     .then(data => {
       setCount(data.hits)
