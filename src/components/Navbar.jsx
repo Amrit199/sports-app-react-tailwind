@@ -8,10 +8,27 @@ import Searchbar from "./Searchbar";
 import Menubar from "./Menubar";
 import { Badge } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useRef } from "react";
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+
+  const menuRef = useRef()
+
+  useEffect(() => {
+    const closeDropdown = (e) => {
+        if(e.path[0] !== menuRef.current) {
+            setOpenMenu(false)
+        }
+    }
+    document.addEventListener("click", closeDropdown)
+
+    return (
+        document.removeEventListener("click", closeDropdown)
+    )
+  })
 
   const handleClick = () => {
     setOpenMenu(false)
@@ -122,7 +139,7 @@ const Navbar = () => {
         }
       >
         {openMenu ? (
-          <div className="w-full p-5">
+          <div className="w-full p-5" ref={menuRef}>
             <div className="flex flex-col gap-1">
                 <Link to={'/product'}>
               <a className="hover:text-green-400 font-bold text-2xl" href="#" onClick={handleClick}>

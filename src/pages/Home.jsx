@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { forest, hero } from "../assets";
-import ItemCard from "../components/ItemCard";
 import HeroCard from "../components/HeroCard";
 import { newProduct, topSellers } from "../store/data";
 
@@ -13,6 +12,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
+import Button from "../components/Button";
+import ProductCard from "../components/ProductCard";
+import Cart from "../components/Cart";
 
 const Home = () => {
   const [count, setCount] = useState([]);
@@ -24,8 +26,6 @@ const Home = () => {
       setCount(data.hits)
     })
   },[1])
-
-  console.log(count)
 
   return (
     <div>
@@ -93,19 +93,7 @@ const Home = () => {
               className="p-3 cursor-pointer min-w-[250px]"
               key={item.key}
             >
-              <div className="relative w-full ">
-                <div className="absolute flex w-full justify-between">
-                  <span className="px-2 text-sm bg-orange-400">3 for 2</span>
-                  <p className="bg-orange-400 px-2">Offer %</p>
-                </div>
-                <img src={item.img} className="w-full h-[250px] object-fill" />
-              </div>
-              <h1 className="font-bold">{item.name}</h1>
-              <p className="text-sm">{item.description}</p>
-              <div className="my-4 px-2 flex w-full justify-between text-xl font-bold">
-                <span className="text-red-600">{item.discounted}</span>
-                <span className="line-through">{item.price}</span>
-              </div>
+              <ProductCard item={item}/>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -131,6 +119,23 @@ const Home = () => {
           navigation={true}
           modules={[Navigation]}
         >
+          {newProduct.map((pd) => (
+             <SwiperSlide
+             className="p-3 cursor-pointer min-w-[300px]"
+             key={pd.key}
+           >
+            <ProductCard item={pd}/>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        
+        {/* <Swiper
+          spaceBetween={20}
+          slidesPerView={4}
+          slidesPerGroup={4}
+          navigation={true}
+          modules={[Navigation]}
+        >
           {newProduct.map((item) => (
             <SwiperSlide
               className="p-3 cursor-pointer min-w-[300px]"
@@ -140,7 +145,8 @@ const Home = () => {
                 <div className="absolute w-full">
                   <span className="px-2 text-sm bg-orange-400">Latest</span>
                 </div>
-                <img src={item.img} className="w-[90%] h-[300px] object-fill" />
+                <img src={item.img} className="w-full h-[250px] object-cover" />
+                <Button />
               </div>
               <h1 className="font-bold">{item.name}</h1>
               <p className="text-sm">{item.description}</p>
@@ -149,7 +155,7 @@ const Home = () => {
               </div>
             </SwiperSlide>
           ))}
-        </Swiper>
+        </Swiper> */}
       </div>
 
       {/* Hero card */}
@@ -180,6 +186,8 @@ const Home = () => {
             className="w-full h-full"/>
         </div>
       </div>
+
+      <Cart />
 
     </div>
   );

@@ -1,8 +1,15 @@
 import React from "react";
 import { Badge } from '@mui/material'
 import { FaCartPlus } from 'react-icons/fa'
+import { useContext } from "react";
+import CartContext from "../store/CartContext";
 
 const Menubar = () => {
+  const cartBox = useContext(CartContext)
+  const {items} = cartBox
+  const itemNumbers = items.reduce((curNumber, item) => {
+    return curNumber + item.amount
+  }, 0)
   return (
     <div className="hidden md:flex justify-between items-center h-7 relative">
       {/* left menu section */}
@@ -199,7 +206,7 @@ const Menubar = () => {
       </div>
       {/* shopping cart icon */}
       <div className="hidden md:flex">
-        <Badge badgeContent={0} color="success" showZero>
+        <Badge badgeContent={itemNumbers} color="success" showZero>
           <FaCartPlus
             size={20}
             className="hover:text-green-400 cursor-pointer"
